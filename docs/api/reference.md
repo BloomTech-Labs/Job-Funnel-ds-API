@@ -3,30 +3,30 @@
 ## 1. Table of Contents
 <!-- TOC -->
 
-- [API Reference](#api-reference)
-	- [1. Table of Contents](#1-table-of-contents)
-	- [2. Introduction](#2-introduction)
-	- [3. Resources](#3-resources)
-		- [3.1. Searches](#31-searches)
-			- [3.1.1. The search object](#311-the-search-object)
-				- [3.1.1.1. Attributes](#3111-attributes)
-				- [3.1.1.2. Example](#3112-example)
-			- [3.1.2. The result object](#312-the-result-object)
-				- [3.1.2.1. Attributes](#3121-attributes)
-				- [3.1.2.2. Example](#3122-example)
-			- [3.1.3. The /search endpoint](#313-the-search-endpoint)
-				- [3.1.3.1. Arguments](#3131-arguments)
-				- [3.1.3.2. Example request](#3132-example-request)
-				- [3.1.3.3. Returns](#3133-returns)
-		- [3.2. Job Details](#32-job-details)
-			- [3.2.1. The details object](#321-the-details-object)
-				- [3.2.1.1. Attributes](#3211-attributes)
-				- [3.2.1.2. Example](#3212-example)
-			- [3.2.2. The /details endpoint](#322-the-details-endpoint)
-				- [3.2.2.1. Arguments](#3221-arguments)
-				- [3.2.2.2. Example request](#3222-example-request)
-				- [3.2.2.3. Returns](#3223-returns)
-	- [4. Errors](#4-errors)
+- [1. Table of Contents](#1-table-of-contents)
+- [2. Introduction](#2-introduction)
+- [3. Resources](#3-resources)
+	- [3.1. Searches](#31-searches)
+		- [3.1.1. The search object](#311-the-search-object)
+			- [3.1.1.1. Attributes](#3111-attributes)
+			- [3.1.1.2. Example](#3112-example)
+		- [3.1.2. The result object](#312-the-result-object)
+			- [3.1.2.1. Attributes](#3121-attributes)
+			- [3.1.2.2. Example](#3122-example)
+		- [3.1.3. The /search endpoint](#313-the-search-endpoint)
+			- [3.1.3.1. Arguments](#3131-arguments)
+			- [3.1.3.2. Example request](#3132-example-request)
+			- [3.1.3.3. Returns](#3133-returns)
+	- [3.2. Job Details](#32-job-details)
+		- [3.2.1. The details object](#321-the-details-object)
+			- [3.2.1.1. Attributes](#3211-attributes)
+			- [3.2.1.2. Example](#3212-example)
+		- [3.2.2. The /details endpoint](#322-the-details-endpoint)
+			- [3.2.2.1. Arguments](#3221-arguments)
+			- [3.2.2.2. Example request](#3222-example-request)
+			- [3.2.2.3. Returns](#3223-returns)
+	- [3.3. Job Evaluation](#33-job-evaluation)
+- [4. Errors](#4-errors)
 
 <!-- /TOC -->
 
@@ -67,13 +67,15 @@ The count of results returned.
 			'title': 'Web Developer, Frontend',
 			'job_id': 14631,
 			'post_timestamp': 1579804925,
-			'relevance': 1.0
+			'relevance': null,
+			'resume_score': null
 		},
 		{
 			'title': 'Fullstack Engineer',
 			'job_id': 14309,
 			'post_timestamp': 1579800341,
-			'relevance': 1.0
+			'relevance': null,
+			'resume_score': null
 		}
 	]
 }
@@ -97,9 +99,13 @@ The id of the job in the database.
 
 The time and date when the job was posted, in epoch format.
 
-`relevance` *Float*
+`relevance` *Float* or *null*
 
-The relevance score of the job. Not yet implemented, so will always be 1.0.
+The relevance score of the job. Not yet implemented.
+
+`resume_score` *Float* or *null*
+
+If a resume is provided, how well it fits the job. Not yet implemented.
 
 ##### 3.1.2.2. Example
 ```json
@@ -107,7 +113,8 @@ The relevance score of the job. Not yet implemented, so will always be 1.0.
 	'title': 'Technical Writer',
 	'job_id': 14111,
 	'post_timestamp': 1579721662,
-	'relevance': 1.0
+	'relevance': null,
+	'resume_score': null
 }
 ```
 
@@ -125,13 +132,17 @@ The job title to search for. If this argument is not present, `keyphrases` is re
 
 A list of keyphrases (e.g. skills) to search for. If this argument is not present, `title` is required.
 
+`resume_id` *String*, Optional
+
+ID of a resume to search by. Not yet implemented.
+
 `count` *Int*, Optional
 
 Maximum number of jobs to return. In the future, this will be ordered by relevance.
 
 `threshold` *Float*, Optional
 
-Minimum relevance of jobs to return. Not currently implemented.
+Minimum relevance of jobs to return. Not yet implemented.
 
 `city` *String*, Optional
 
@@ -239,6 +250,10 @@ The salary of the job, if available.
 
 The seniority level of the job.
 
+`lambda_hireability` *Float* or *null*
+
+How relevant a job is to Lambda grads. A higher score means the job is more likely to hire a Lambda grad. Not yet implemented.
+
 ##### 3.2.1.2. Example
 
 ```json
@@ -256,9 +271,10 @@ The seniority level of the job.
 	'company_revenue': 15000,
 	'company_size': null,
 	'pay_min': null,
-	'pay_max': null
+	'pay_max': null,
 	'pay_exact': 30000,
-	'seniority': 'Entry-level'
+	'seniority': 'Entry-level',
+	'lambda_hireability': null
 }
 ```
 
@@ -282,6 +298,11 @@ The job ID to get details for.
 ##### 3.2.2.3. Returns
 
 Returns a [details object](#321-the-details-object) if the job is found, or an [error](#4-errors) otherwise. Errors will usually be due to an invalid job ID.
+
+
+### 3.3. Job Evaluation
+
+Job evaluation will get more detailed information regarding how well a resume fits a job. Not yet implemented.
 
 
 ## 4. Errors
