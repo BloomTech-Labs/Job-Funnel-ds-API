@@ -154,7 +154,7 @@ Country in which to search.
 
 ##### 3.1.3.3. Returns
 
-Returns a [search object](#311-the-search-object) if the search succeeds, or an [error](#3-errors) otherwise. Errors will usually be due to a missing required argument or malformed request.
+Returns a [search object](#311-the-search-object) if the search succeeds, or an [error](#4-errors) otherwise. Errors will usually be due to a missing required argument or malformed request.
 
 
 ### 3.2. Job Details
@@ -273,7 +273,7 @@ The job ID to get details for.
 
 ##### 3.2.2.3. Returns
 
-Returns a [details object](#321-the-details-object) if the job is found, or an [error](#3-errors) otherwise. Errors will usually be due to an invalid job ID.
+Returns a [details object](#321-the-details-object) if the job is found, or an [error](#4-errors) otherwise. Errors will usually be due to an invalid job ID.
 
 
 ## 4. Errors
