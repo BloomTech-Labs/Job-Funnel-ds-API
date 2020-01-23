@@ -117,9 +117,13 @@ The relevance score of the job. Not yet implemented, so will always be 1.0.
 
 ##### 3.1.3.1. Arguments
 
-`title` *String*, Required
+`title` *String*, Optional
 
-The job title to search for.
+The job title to search for. If this argument is not present, `keyphrases` is required.
+
+`keyphrases` *List* of *String*, Optional
+
+A list of keyphrases (e.g. skills) to search for. If this argument is not present, `title` is required.
 
 `count` *Int*, Optional
 
@@ -145,6 +149,10 @@ Country in which to search.
 ```json
 {
 	'title': 'Developer',
+	'keyphrases': [
+		'React',
+		'Node'
+	]
 	'count': 10,
 	'threshold': 0.4,
 	'state_province': 'Nevada',
