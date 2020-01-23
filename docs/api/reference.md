@@ -85,27 +85,27 @@ The relevance score of the job. Not yet implemented, so will always be 1.0.
 
 ##### Arguments #####
 
-`title`, *String*, Required
+`title` *String*, Required
 
 The job title to search for.
 
-`count`, *Int*, Optional
+`count` *Int*, Optional
 
 Maximum number of jobs to return. In the future, this will be ordered by relevance.
 
-`threshold`, *Float*, Optional
+`threshold` *Float*, Optional
 
 Minimum relevance of jobs to return. Not currently implemented.
 
-`city`, *String*, Optional
+`city` *String*, Optional
 
 City in which to search.
 
-`state_province`, *String*, Optional
+`state_province` *String*, Optional
 
 State or province in which to search.
 
-`country`, *String*, Optional
+`country` *String*, Optional
 
 Country in which to search.
 
@@ -228,7 +228,7 @@ The seniority level of the job.
 
 ##### Arguments #####
 
-`job_id`, *Int*, Required
+`job_id` *Int*, Required
 
 The job ID to get details for.
 
