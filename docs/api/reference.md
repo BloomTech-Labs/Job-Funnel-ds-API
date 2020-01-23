@@ -15,11 +15,11 @@ The API accepts `application/json` requests and returns `application/json` respo
 
 ##### Attributes #####
 
-*responses* (`List`)
+`responses` (*List*)
 
 A list of [result objects](#result_object). If no results were found, this list may be empty.
 
-*count* (`Int`)
+`count` (*Int*)
 
 The count of results returned.
 
@@ -50,19 +50,19 @@ The count of results returned.
 
 ##### Attributes #####
 
-*title* (`String`)
+`title` (*String*)
 
 The title of the job.
 
-*job_id* (`Int`)
+`job_id` (*Int*)
 
 The id of the job in the database.
 
-*post_timestamp* (`Int`)
+`post_timestamp` (*Int*)
 
 The time and date when the job was posted, in epoch format.
 
-*relevance* (`Float`)
+`relevance` (*Float*)
 
 The relevance score of the job. Not yet implemented, so will always be 1.0.
 
@@ -83,19 +83,19 @@ The relevance score of the job. Not yet implemented, so will always be 1.0.
 
 ##### Arguments #####
 
-*title* (Required)
+`title` (Required)
 
 The job title to search for.
 
-*count*
+`count`
 
 Maximum number of jobs to return. In the future, this will be ordered by relevance.
 
-*threshold*
+`threshold`
 
 Minimum relevance of jobs to return. Not currently implemented.
 
-*city*
+`city`
 
 City in which to search.
 
