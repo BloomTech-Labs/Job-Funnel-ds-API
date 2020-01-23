@@ -1,52 +1,54 @@
+# API Reference
 
-# 1. Table of Contents
+## 1. Table of Contents
 <!-- TOC -->
 
-- [1. Table of Contents](#1-table-of-contents)
-- [2. API Reference](#2-api-reference)
-- [3. Resources](#3-resources)
-	- [3.1. Searches](#31-searches)
-		- [3.1.1. The search object](#311-the-search-object)
-			- [3.1.1.1. Attributes](#3111-attributes)
-			- [3.1.1.2. Example](#3112-example)
-		- [3.1.2. The result object](#312-the-result-object)
-			- [3.1.2.1. Attributes](#3121-attributes)
-			- [3.1.2.2. Example](#3122-example)
-		- [3.1.3. The /search endpoint](#313-the-search-endpoint)
-			- [3.1.3.1. Arguments](#3131-arguments)
-			- [3.1.3.2. Example request](#3132-example-request)
-			- [3.1.3.3. Returns](#3133-returns)
-	- [3.2. Job Details](#32-job-details)
-		- [3.2.1. The details object](#321-the-details-object)
-			- [3.2.1.1. Attributes](#3211-attributes)
-			- [3.2.1.2. Example](#3212-example)
-		- [3.2.2. The /details endpoint](#322-the-details-endpoint)
-			- [3.2.2.1. Arguments](#3221-arguments)
-			- [3.2.2.2. Example request](#3222-example-request)
-			- [3.2.2.3. Returns](#3223-returns)
-- [4. Errors](#4-errors)
+- [API Reference](#api-reference)
+	- [1. Table of Contents](#1-table-of-contents)
+	- [2. Introduction](#2-introduction)
+	- [3. Resources](#3-resources)
+		- [3.1. Searches](#31-searches)
+			- [3.1.1. The search object](#311-the-search-object)
+				- [3.1.1.1. Attributes](#3111-attributes)
+				- [3.1.1.2. Example](#3112-example)
+			- [3.1.2. The result object](#312-the-result-object)
+				- [3.1.2.1. Attributes](#3121-attributes)
+				- [3.1.2.2. Example](#3122-example)
+			- [3.1.3. The /search endpoint](#313-the-search-endpoint)
+				- [3.1.3.1. Arguments](#3131-arguments)
+				- [3.1.3.2. Example request](#3132-example-request)
+				- [3.1.3.3. Returns](#3133-returns)
+		- [3.2. Job Details](#32-job-details)
+			- [3.2.1. The details object](#321-the-details-object)
+				- [3.2.1.1. Attributes](#3211-attributes)
+				- [3.2.1.2. Example](#3212-example)
+			- [3.2.2. The /details endpoint](#322-the-details-endpoint)
+				- [3.2.2.1. Arguments](#3221-arguments)
+				- [3.2.2.2. Example request](#3222-example-request)
+				- [3.2.2.3. Returns](#3223-returns)
+	- [4. Errors](#4-errors)
 
 <!-- /TOC -->
 
-# 2. API Reference
+## 2. Introduction
 
 Base URL: TBD
 
 The API accepts `application/json` requests and returns `application/json` responses.
 
 
-# 3. Resources
+## 3. Resources
 
 
-## 3.1. Searches
+### 3.1. Searches
 
 Searches provide a way for users to search the database for jobs.
 
-### 3.1.1. The search object
+#### 3.1.1. The search object
 
 The search object is returned by [the /search endpoint](#313-the-search-endpoint).
 
-#### 3.1.1.1. Attributes
+##### 3.1.1.1. Attributes
 
 `responses` *List*
 
@@ -56,7 +58,7 @@ A list of [result objects](#312-the-result-object). If no results were found, th
 
 The count of results returned.
 
-#### 3.1.1.2. Example
+##### 3.1.1.2. Example
 ```json
 {
 	'count': 2,
@@ -77,11 +79,11 @@ The count of results returned.
 }
 ```
 
-### 3.1.2. The result object
+#### 3.1.2. The result object
 
 Several result objects are included in each [search object](#311-the-search-object), which is returned by [the /search endpoint](#313-the-search-endpoint).
 
-#### 3.1.2.1. Attributes
+##### 3.1.2.1. Attributes
 
 `title` *String*
 
@@ -99,7 +101,7 @@ The time and date when the job was posted, in epoch format.
 
 The relevance score of the job. Not yet implemented, so will always be 1.0.
 
-#### 3.1.2.2. Example
+##### 3.1.2.2. Example
 ```json
 {
 	'title': 'Technical Writer',
@@ -109,11 +111,11 @@ The relevance score of the job. Not yet implemented, so will always be 1.0.
 }
 ```
 
-### 3.1.3. The /search endpoint
+#### 3.1.3. The /search endpoint
 
 `/search` accepts GET or POST requests.
 
-#### 3.1.3.1. Arguments
+##### 3.1.3.1. Arguments
 
 `title` *String*, Required
 
@@ -139,7 +141,7 @@ State or province in which to search.
 
 Country in which to search.
 
-#### 3.1.3.2. Example request
+##### 3.1.3.2. Example request
 ```json
 {
 	'title': 'Developer',
@@ -150,20 +152,20 @@ Country in which to search.
 }
 ```
 
-#### 3.1.3.3. Returns
+##### 3.1.3.3. Returns
 
 Returns a [search object](#311-the-search-object) if the search succeeds, or an [error](#3-errors) otherwise. Errors will usually be due to a missing required argument or malformed request.
 
 
-## 3.2. Job Details
+### 3.2. Job Details
 
 Job Details provide additional details about a job listing.
 
-### 3.2.1. The details object
+#### 3.2.1. The details object
 
 The details object is returned by [the /details endpoint](#322-the-details-endpoint).
 
-#### 3.2.1.1. Attributes
+##### 3.2.1.1. Attributes
 
 `title` *String*
 
@@ -229,7 +231,7 @@ The salary of the job, if available.
 
 The seniority level of the job.
 
-#### 3.2.1.2. Example
+##### 3.2.1.2. Example
 
 ```json
 {
@@ -252,28 +254,28 @@ The seniority level of the job.
 }
 ```
 
-### 3.2.2. The /details endpoint
+#### 3.2.2. The /details endpoint
 
 `/details` accepts GET or POST requests.
 
-#### 3.2.2.1. Arguments
+##### 3.2.2.1. Arguments
 
 `job_id` *Int*, Required
 
 The job ID to get details for.
 
-#### 3.2.2.2. Example request
+##### 3.2.2.2. Example request
 ```json
 {
 	'job_id': 15979
 }
 ```
 
-#### 3.2.2.3. Returns
+##### 3.2.2.3. Returns
 
 Returns a [details object](#321-the-details-object) if the job is found, or an [error](#3-errors) otherwise. Errors will usually be due to an invalid job ID.
 
 
-# 4. Errors
+## 4. Errors
 
 TODO
