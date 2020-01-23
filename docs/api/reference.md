@@ -132,7 +132,7 @@ The job title to search for. If this argument is not present, `keyphrases` is re
 
 A list of keyphrases (e.g. skills) to search for. If this argument is not present, `title` is required.
 
-`resume_id` *String*, Optional
+`resume_id` *null*, Optional
 
 ID of a resume to search by. Not yet implemented.
 
