@@ -34,13 +34,6 @@ job_id
 description
 ```
 
-### jobs_keywords ###
-```
-id
-job_id
-keyword
-```
-
 ### jobs_keyphrases ###
 ```
 id
