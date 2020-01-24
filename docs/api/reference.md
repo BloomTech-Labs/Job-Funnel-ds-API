@@ -210,10 +210,6 @@ The state or province of the job.
 
 The country of the job.
 
-`keywords` *List* of *String*
-
-Keywords associated with the job.
-
 `keyphrases` *List* of *String*
 
 Keyphrases associated with the job.
@@ -264,8 +260,7 @@ How relevant a job is to Lambda grads. A higher score means the job is more like
 	'location_city': 'Toronto',
 	'location_state_province': 'Ontario',
 	'location_country': 'Canada',
-	'keywords': ['Tensorflow', 'Python', 'R', 'COBOL', 'Internship']
-	'keyphrases': ['Data Pipeline', 'Share-based compensation']
+	'keyphrases': ['Data Pipeline', 'Share-based compensation', 'Tensorflow', 'Python', 'R', 'COBOL', 'Internship']
 	'company_name': 'George's Data Warehouse',
 	'company_description': 'How hard can it be to convert a warehouse into the data kind?',
 	'company_revenue': 15000,
