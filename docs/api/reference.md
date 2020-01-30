@@ -194,6 +194,10 @@ The title of the job.
 
 The id of the job in the database.
 
+`post_timestamp` *Int*
+
+The date the job was added to the database, in epoch time.
+
 `description` *String*
 
 The description of the job.
@@ -256,6 +260,7 @@ How relevant a job is to Lambda grads. A higher score means the job is more like
 {
 	'title': 'Data Engineer',
 	'job_id': 13299,
+	'post_timestamp': 1579721662,
 	'description': 'This is a long job description about the Data Engineer position. Requires 32 years of experience with Tensorflow, and four PhDs.',
 	'location_city': 'Toronto',
 	'location_state_province': 'Ontario',
