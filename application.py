@@ -4,9 +4,9 @@ import psycopg2
 from dbfunctions import get_jobs
 from decouple import config
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-@app.route('/search')
+@application.route('/search')
 def search():
     """ when someone types /search in the url this function will work to
     present what we want for this page """
@@ -18,7 +18,7 @@ def search():
 
 
 
-@app.route('/details')
+@application.route('/details')
 def details():
     """ when someone types /details in the url this function will work to
     present what we want for this page """
@@ -33,4 +33,4 @@ def details():
     return jsonify(output)
 
 if __name__ == "__main__":
-    app.run()
+    application.run()
