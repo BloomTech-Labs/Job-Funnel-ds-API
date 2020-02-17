@@ -30,7 +30,9 @@ def get_details(job_id, db):
 			'description': results[0]
 		})
 	except Exception:
-		pass
+		output.update({
+			'description': None
+		})
 
 	try:
 		job_keyphrases_query = """
@@ -43,7 +45,9 @@ def get_details(job_id, db):
 			'keyphrases': results,
 		})
 	except Exception:
-		pass
+		output.update({
+			'keyphrases': []
+		})
 
 	try:
 		job_companies_query = """
@@ -67,7 +71,12 @@ def get_details(job_id, db):
 			'company_revenue': results[3]
 		})
 	except Exception:
-		pass
+		output.update({
+			'company_name': None,
+			'company_description': None,
+			'company_size': None,
+			'company_revenue': None
+		})
 
 	try:
 		job_locations_query = """
@@ -90,7 +99,11 @@ def get_details(job_id, db):
 			'location_country': results[2]
 		})
 	except Exception:
-		pass
+		output.update({
+			'location_city': None,
+			'location_state_province': None,
+			'location_country': None
+		})
 
 	try:
 		job_links_query = """
@@ -109,7 +122,9 @@ def get_details(job_id, db):
 			'link': results[0],
 		})
 	except Exception:
-		pass
+		output.update({
+			'link': None
+		})
 
 	cur.close()
 
