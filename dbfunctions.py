@@ -19,83 +19,97 @@ def get_details(job_id, db):
 		'seniority': results[6]
 	}
 
-	job_descriptions_query = """
-		SELECT description FROM job_descriptions WHERE job_id = %(job_id)s
-	"""
-	cur.execute(job_descriptions_query, {'job_id': job_id})
-	results = cur.fetchone()
+	try:
+		job_descriptions_query = """
+			SELECT description FROM job_descriptions WHERE job_id = %(job_id)s
+		"""
+		cur.execute(job_descriptions_query, {'job_id': job_id})
+		results = cur.fetchone()
 
-	output.update({
-		'description': results[0]
-	})
+		output.update({
+			'description': results[0]
+		})
+	except Exception:
+		pass
 
-	job_keyphrases_query = """
-		SELECT keyphrase FROM job_keyphrases WHERE job_id = %(job_id)s
-	"""
-	cur.execute(job_keyphrases_query, {'job_id': job_id})
-	results = [result[0] for result in cur.fetchall()]
+	try:
+		job_keyphrases_query = """
+			SELECT keyphrase FROM job_keyphrases WHERE job_id = %(job_id)s
+		"""
+		cur.execute(job_keyphrases_query, {'job_id': job_id})
+		results = [result[0] for result in cur.fetchall()]
 
-	output.update({
-		'keyphrases': results,
-	})
+		output.update({
+			'keyphrases': results,
+		})
+	except Exception:
+		pass
 
-	job_companies_query = """
-		SELECT name, description, size, revenue
-		FROM job_companies
-		INNER JOIN companies
-		ON job_companies.company_id = companies.id
-		WHERE job_id = %(job_id)s
-		LIMIT 1
-	"""
-	cur.execute(
-		job_companies_query,
-		{'job_id': job_id}
-	)
-	results = cur.fetchone()
+	try:
+		job_companies_query = """
+			SELECT name, description, size, revenue
+			FROM job_companies
+			INNER JOIN companies
+			ON job_companies.company_id = companies.id
+			WHERE job_id = %(job_id)s
+			LIMIT 1
+		"""
+		cur.execute(
+			job_companies_query,
+			{'job_id': job_id}
+		)
+		results = cur.fetchone()
 
-	output.update({
-		'company_name': results[0],
-		'company_description': results[1],
-		'company_size': results[2],
-		'company_revenue': results[3]
-	})
+		output.update({
+			'company_name': results[0],
+			'company_description': results[1],
+			'company_size': results[2],
+			'company_revenue': results[3]
+		})
+	except Exception:
+		pass
 
-	job_locations_query = """
-		SELECT city, state_province, country
-		FROM job_locations
-		INNER JOIN locations
-		ON job_locations.location_id = locations.id
-		WHERE job_id = %(job_id)s
-		LIMIT 1;
-	"""
-	cur.execute(
-		job_locations_query,
-		{'job_id': job_id}
-	)
-	results = cur.fetchone()
+	try:
+		job_locations_query = """
+			SELECT city, state_province, country
+			FROM job_locations
+			INNER JOIN locations
+			ON job_locations.location_id = locations.id
+			WHERE job_id = %(job_id)s
+			LIMIT 1;
+		"""
+		cur.execute(
+			job_locations_query,
+			{'job_id': job_id}
+		)
+		results = cur.fetchone()
 
-	output.update({
-		'location_city': results[0],
-		'location_state_province': results[1],
-		'location_country': results[2]
-	})
+		output.update({
+			'location_city': results[0],
+			'location_state_province': results[1],
+			'location_country': results[2]
+		})
+	except Exception:
+		pass
 
-	job_links_query = """
-		SELECT external_url
-		FROM job_links
-		WHERE job_id = %(job_id)s
-		LIMIT 1;
-	"""
-	cur.execute(
-		job_links_query,
-		{'job_id': job_id}
-	)
-	results = cur.fetchone()
+	try:
+		job_links_query = """
+			SELECT external_url
+			FROM job_links
+			WHERE job_id = %(job_id)s
+			LIMIT 1;
+		"""
+		cur.execute(
+			job_links_query,
+			{'job_id': job_id}
+		)
+		results = cur.fetchone()
 
-	output.update({
-		'link': results[0],
-	})
-
+		output.update({
+			'link': results[0],
+		})
+	except Exception:
+		pass
 
 	cur.close()
 
