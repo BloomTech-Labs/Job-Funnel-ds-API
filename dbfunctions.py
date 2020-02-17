@@ -54,10 +54,10 @@ def get_details(job_id, db):
 	results = cur.fetchone()
 
 	output.update({
-		'company_name':results[4],
+		'company_name': results[4],
 		'company_description': results[5],
 		'company_size': results[6],
-		'company_revenue':results[7]
+		'company_revenue': results[7]
 	})
 
 	job_locations_query = """
