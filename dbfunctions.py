@@ -1,4 +1,5 @@
 import psycopg2
+import re
 
 
 def get_details(job_id, db):
@@ -141,11 +142,11 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 	'''
 	if city is not None:
 		location_where_subquery += '''
-			AND city ILIKE %(city)s
+			AND city = %(city)s
 		'''
 	if state_province is not None:
 		location_where_subquery += '''
-			AND state_province ILIKE %(state_province)s
+			AND state_province = %(state_province)s
 		'''
 	if country is not None:
 		location_where_subquery += '''
@@ -216,8 +217,8 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 
 	params = {
 		'count': count,
-		'city': city,
-		'state_province': state_province,
+		'city': titlecase(city),
+		'state_province': titlecase(state_province),
 		'country': country,
 		'before': before,
 		'after': after,
@@ -262,6 +263,31 @@ def handle_state_province(state_province):
 		except Exception as e:
 			pass
 	return state_province
+
+
+def titlecase(s: str) -> str:
+	"""
+	Titlecases a string in a stricter manner.
+		Does not fail on symbols and apostrophes.
+
+	Args:
+		s (str): string to titlecase
+
+	Returns:
+		str: titlecased string
+	"""
+
+	return (
+		re.sub(
+			r"^[A-Za-z]+",
+			lambda mo: mo.group(0)[0].upper() + mo.group(0)[1:].lower(),
+			re.sub(
+				r"(?<=[\n 	])[A-Za-z]+",
+				lambda mo: mo.group(0)[0].upper() + mo.group(0)[1:].lower(),
+				s
+			)
+		)
+	)
 
 
 def abbr_to_state(abbr):
