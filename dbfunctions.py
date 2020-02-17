@@ -135,26 +135,39 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 	state_province = handle_state_province(state_province)
 
 	cur = db.cursor()
-	location_subquery = ''
-	if None not in [city, state_province, country]:
-		location_subquery = '''
-			INNER JOIN (
-				SELECT *
-				FROM job_locations
-				INNER JOIN (
-					SELECT *
-					FROM locations
-					WHERE city=%(city)s
-						AND state_province=%(state_province)s
-						AND country=%(country)s
-				) AS loc
-				ON job_locations.location_id = loc.id
-			) AS jobs_locs
-			ON job_listings.id = jobs_locs.job_id
+
+	location_where_subquery = '''
+		WHERE TRUE
+	'''
+	if city is not None:
+		location_where_subquery += '''
+			AND city = %(city)s
+		'''
+	if state_province is not None:
+		location_where_subquery += '''
+			AND state_province = %(state_province)s
+		'''
+	if country is not None:
+		location_where_subquery += '''
+			AND country = %(country)s
 		'''
 
+	location_subquery = f'''
+		INNER JOIN (
+			SELECT *
+			FROM job_locations
+			INNER JOIN (
+				SELECT *
+				FROM locations
+				{location_where_subquery}
+			) AS loc
+			ON job_locations.location_id = loc.id
+		) AS jobs_locs
+		ON job_listings.id = jobs_locs.job_id
+	'''
+
 	where_subquery = '''
-		WHERE '' = ''
+		WHERE TRUE
 	'''
 	if before is not None:
 		where_subquery += '''
