@@ -80,6 +80,23 @@ def get_details(job_id, db):
 		'location_country': results[2]
 	})
 
+	job_links_query = """
+		SELECT external_url
+		FROM job_links
+		WHERE job_id = %(job_id)s
+		LIMIT 1;
+	"""
+	cur.execute(
+		job_links_query,
+		{'job_id': job_id}
+	)
+	results = cur.fetchone()
+
+	output.update({
+		'link': results[0],
+	})
+
+
 	cur.close()
 
 	return output
