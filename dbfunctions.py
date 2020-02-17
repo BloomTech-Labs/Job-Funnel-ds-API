@@ -182,6 +182,15 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 				OR pay_exact > %(salary_max)s
 			)
 		'''
+	title_params = {}
+	if title is not None:
+		title_parts = title.split()
+		for i, title_part in enumerate(title_parts):
+			key = f'title_part_{i}'
+			title_params[key] = f'%{title_part}%'
+			where_subquery += f'''
+				AND title ILIKE %({key})s
+			'''
 
 	job_results_query = f'''
 		SELECT job_listings.id, job_listings.title, EXTRACT(epoch FROM job_listings.post_date_utc)
@@ -192,20 +201,22 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 		LIMIT %(count)s;
 	'''
 
+	params = {
+		'count': count,
+		'city': city,
+		'state_province': state_province,
+		'country': country,
+		'before': before,
+		'after': after,
+		'seniority': seniority,
+		'salary_min': salary_min,
+		'salary_max': salary_max,
+		'title': title,
+	}
+	params.update(title_params)
 	cur.execute(
 		job_results_query,
-		{
-			'count': count,
-			'city': city,
-			'state_province': state_province,
-			'country': country,
-			'before': before,
-			'after': after,
-			'seniority': seniority,
-			'salary_min': salary_min,
-			'salary_max': salary_max,
-			'title': title,
-		}
+		params
 	)
 	results = cur.fetchall()
 	cur.close()
