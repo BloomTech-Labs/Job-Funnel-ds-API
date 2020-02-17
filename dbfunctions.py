@@ -141,15 +141,15 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 	'''
 	if city is not None:
 		location_where_subquery += '''
-			AND city = %(city)s
+			AND city ILIKE %(city)s
 		'''
 	if state_province is not None:
 		location_where_subquery += '''
-			AND state_province = %(state_province)s
+			AND state_province ILIKE %(state_province)s
 		'''
 	if country is not None:
 		location_where_subquery += '''
-			AND country = %(country)s
+			AND country ILIKE %(country)s
 		'''
 
 	location_subquery = f'''
@@ -179,7 +179,7 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 		'''
 	if seniority is not None:
 		where_subquery += '''
-			AND seniority = %(seniority)s
+			AND seniority ILIKE %(seniority)s
 		'''
 	if salary_min is not None:
 		where_subquery += '''
@@ -227,23 +227,30 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 		'title': title,
 	}
 	params.update(title_params)
-	cur.execute(
-		job_results_query,
-		params
-	)
-	results = cur.fetchall()
-	cur.close()
 
-	resultList = []
-	for result in results:
-		resultsjson = {
-			'job_id': result[0],
-			'title': result[1],
-			'post_timestamp': result[2],
-			'relevance': None,
-			'resume_score': None,
-		}
-		resultList.append(resultsjson)
+	try:
+		cur.execute(
+			job_results_query,
+			params
+		)
+		results = cur.fetchall()
+
+		resultList = []
+		for result in results:
+			resultsjson = {
+				'job_id': result[0],
+				'title': result[1],
+				'post_timestamp': result[2],
+				'relevance': None,
+				'resume_score': None,
+			}
+			resultList.append(resultsjson)
+
+	except Exception as e:
+		resultList = []
+
+	finally:
+		cur.close()
 
 	return resultList
 
