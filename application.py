@@ -39,6 +39,7 @@ def details():
 		output = {
 			'error': 'job_id parameter is required'
 		}
+		return jsonify(output)
 	with psycopg2.connect(dbname=config("DB_DB"),
 	user=config("DB_USER"), password=config("DB_PASSWORD"),
 	host=config("DB_HOST"), port=config("DB_PORT")) as psql_conn:
