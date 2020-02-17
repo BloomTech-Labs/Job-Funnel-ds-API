@@ -86,17 +86,12 @@ def get_details(job_id, db):
 
 
 def get_jobs(db, count=100, city=None, state_province=None, country='US', title=None):
+	state_province = handle_state_province(state_province)
+
 	cur = db.cursor()
-	job_results_query = """SELECT id, title, post_date_utc FROM job_listings ORDER BY random() LIMIT %(count)s"""
-	if state_province is not None and len(state_province) < 4:
-		try:
-			state_province = abbr_to_state(state_province)
-		except Exception as e:
-			pass
+	location_subquery = ''
 	if None not in [city, state_province, country]:
-		job_results_query = '''
-			SELECT job_listings.id, job_listings.title, job_listings.post_date_utc
-			FROM job_listings
+		location_subquery = '''
 			INNER JOIN (
 				SELECT *
 				FROM job_locations
@@ -110,8 +105,16 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 				ON job_locations.location_id = loc.id
 			) AS jobs_locs
 			ON job_listings.id = jobs_locs.job_id
-			LIMIT %(count)s;
 		'''
+
+	job_results_query = f'''
+		SELECT job_listings.id, job_listings.title, job_listings.post_date_utc
+		FROM job_listings
+		{location_subquery}
+		ORDER BY random()
+		LIMIT %(count)s;
+	'''
+
 	cur.execute(
 		job_results_query,
 		{
@@ -136,6 +139,15 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 		resultList.append(resultsjson)
 
 	return resultList
+
+
+def handle_state_province(state_province):
+	if state_province is not None and len(state_province) < 4:
+		try:
+			state_province = abbr_to_state(state_province)
+		except Exception as e:
+			pass
+	return state_province
 
 
 def abbr_to_state(abbr):
