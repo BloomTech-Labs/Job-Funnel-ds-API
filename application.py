@@ -12,6 +12,11 @@ def search():
 	""" when someone types /search in the url this function will work to
 	present what we want for this page """
 
+	job_id = request.args.get('job_id', None)
+	city = request.args.get('city', None)
+	state_province = request.args.get('state_province', None)
+	country = request.args.get('country', 'US')
+	title = request.args.get('title', None)
 	count = request.args.get('count', 100)
 	with psycopg2.connect(
 			dbname=config("DB_DB"),
@@ -20,7 +25,14 @@ def search():
 			host=config("DB_HOST"),
 			port=config("DB_PORT")
 	) as psql_conn:
-		output = get_jobs(psql_conn, count=count)
+		output = get_jobs(
+			psql_conn,
+			count=count,
+			city=city,
+			state_province=state_province,
+			country=country,
+			title=title
+		)
 	ret = {
 		'count': len(output),
 		'responses': output

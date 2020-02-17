@@ -85,14 +85,35 @@ def get_details(job_id, db):
 	return output
 
 
-def get_jobs(db, count=100, location=None):
+def get_jobs(db, count=100, city=None, state_province=None, country='US', title=None):
 	cur = db.cursor()
 	job_results_query = """SELECT id, title, post_date_utc FROM job_listings ORDER BY random() LIMIT %(count)s"""
+	if None not in [city, state_province, country]:
+		job_results_query = '''
+			SELECT job_listings.id, job_listings.title, job_listings.post_date_utc
+			FROM job_listings
+			INNER JOIN (
+				SELECT *
+				FROM job_locations
+				INNER JOIN (
+					SELECT *
+					FROM locations
+					WHERE city=%(city)s
+						AND state_province=%(state_province)s
+						AND country=%(country)s
+				) AS loc
+				ON job_locations.location_id = loc.id
+			) AS jobs_locs
+			ON job_listings.id = jobs_locs.job_id
+			LIMIT %(count)s;
+		'''
 	cur.execute(
 		job_results_query,
 		{
 			'count': count,
-			'location': location
+			'city': city,
+			'state_province': state_province,
+			'country': country
 		}
 	)
 	results = cur.fetchall()
