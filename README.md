@@ -4,7 +4,7 @@
 
 🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
 
-# 1️⃣ Title of project goes here
+# QuickHire (A.K.A. Job Funnel)
 
 You can find the project at [🚫URL NAME GOES HERE](🚫copy and paste URL here).
 
@@ -32,9 +32,9 @@ You can find the project at [🚫URL NAME GOES HERE](🚫copy and paste URL here
 ## Project Overview
 
 
-1️⃣ [Trello Board](🚫add link to trello board here)
+1️⃣ [Trello Board](https://trello.com/b/dorhqi4o/job-funnel)
 
-1️⃣ [Product Canvas](🚫add link to product canvas here)
+1️⃣ [Product Canvas](https://www.notion.so/quickhire-dev-20ba287fac1c403c92a8ebb8766821a0)
 
 🚫 Replace lorem ipsum with a description of your project
 
