@@ -3,7 +3,7 @@ import psycopg2
 
 def get_details(job_id, db):
 	job_listings_query = """
-		SELECT * FROM job_listings WHERE id = %(job_id)s
+		SELECT id, title, post_date_utc, pay_min, pay_max, pay_exact, seniority FROM job_listings WHERE id = %(job_id)s
 	"""
 	cur = db.cursor()
 	cur.execute(job_listings_query, {'job_id': job_id})
@@ -20,27 +20,27 @@ def get_details(job_id, db):
 	}
 
 	job_descriptions_query = """
-		SELECT * FROM job_descriptions WHERE job_id = %(job_id)s
+		SELECT description FROM job_descriptions WHERE job_id = %(job_id)s
 	"""
 	cur.execute(job_descriptions_query, {'job_id': job_id})
 	results = cur.fetchone()
 
 	output.update({
-		'description': results[2]
+		'description': results[0]
 	})
 
 	job_keyphrases_query = """
-		SELECT * FROM job_keyphrases WHERE job_id = %(job_id)s
+		SELECT keyphrase FROM job_keyphrases WHERE job_id = %(job_id)s
 	"""
 	cur.execute(job_keyphrases_query, {'job_id': job_id})
-	results = [result[2] for result in cur.fetchall()]
+	results = [result[0] for result in cur.fetchall()]
 
 	output.update({
 		'keyphrases': results,
 	})
 
 	job_companies_query = """
-		SELECT *
+		SELECT name, description, size, revenue
 		FROM job_companies
 		INNER JOIN companies
 		ON job_companies.company_id = companies.id
@@ -54,14 +54,14 @@ def get_details(job_id, db):
 	results = cur.fetchone()
 
 	output.update({
-		'company_name': results[4],
-		'company_description': results[5],
-		'company_size': results[6],
-		'company_revenue': results[7]
+		'company_name': results[0],
+		'company_description': results[1],
+		'company_size': results[2],
+		'company_revenue': results[3]
 	})
 
 	job_locations_query = """
-		SELECT *
+		SELECT city, state_province, country
 		FROM job_locations
 		INNER JOIN locations
 		ON job_locations.location_id = locations.id
@@ -75,9 +75,9 @@ def get_details(job_id, db):
 	results = cur.fetchone()
 
 	output.update({
-		'location_city': results[4],
-		'location_state_province': results[5],
-		'location_country': results[6]
+		'location_city': results[0],
+		'location_state_province': results[1],
+		'location_country': results[2]
 	})
 
 	cur.close()
