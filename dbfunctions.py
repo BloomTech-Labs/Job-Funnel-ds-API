@@ -215,10 +215,14 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 		LIMIT %(count)s;
 	'''
 
+	if city is not None:
+		city = titlecase(city)
+	if state_province is not None:
+		state_province = titlecase(state_province)
 	params = {
 		'count': count,
-		'city': titlecase(city),
-		'state_province': titlecase(state_province),
+		'city': city,
+		'state_province': state_province,
 		'country': country,
 		'before': before,
 		'after': after,
