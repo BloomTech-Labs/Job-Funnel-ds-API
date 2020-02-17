@@ -30,7 +30,7 @@ def get_details(job_id, db):
 	})
 
 	job_keyphrases_query = """
-		SELECT * FROM job_keyphrase WHERE job_id = %(job_id)s
+		SELECT * FROM job_keyphrases WHERE job_id = %(job_id)s
 	"""
 	cur.execute(job_keyphrases_query, {'job_id': job_id})
 	results = [result[2] for result in cur.fetchall()]
