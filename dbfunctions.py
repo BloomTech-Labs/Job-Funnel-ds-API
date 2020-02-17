@@ -88,6 +88,11 @@ def get_details(job_id, db):
 def get_jobs(db, count=100, city=None, state_province=None, country='US', title=None):
 	cur = db.cursor()
 	job_results_query = """SELECT id, title, post_date_utc FROM job_listings ORDER BY random() LIMIT %(count)s"""
+	if state_province is not None and len(state_province) < 4:
+		try:
+			state_province = abbr_to_state(state_province)
+		except Exception as e:
+			pass
 	if None not in [city, state_province, country]:
 		job_results_query = '''
 			SELECT job_listings.id, job_listings.title, job_listings.post_date_utc
@@ -131,3 +136,59 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 		resultList.append(resultsjson)
 
 	return resultList
+
+
+def abbr_to_state(abbr):
+	return {
+		'DC': 'District of Columbia',
+		'AL': 'Alabama',
+		'MT': 'Montana',
+		'AK': 'Alaska',
+		'NE': 'Nebraska',
+		'AZ': 'Arizona',
+		'NV': 'Nevada',
+		'AR': 'Arkansas',
+		'NH': 'New Hampshire',
+		'CA': 'California',
+		'NJ': 'New Jersey',
+		'CO': 'Colorado',
+		'NM': 'New Mexico',
+		'CT': 'Connecticut',
+		'NY': 'New York',
+		'DE': 'Delaware',
+		'NC': 'North Carolina',
+		'FL': 'Florida',
+		'ND': 'North Dakota',
+		'GA': 'Georgia',
+		'OH': 'Ohio',
+		'HI': 'Hawaii',
+		'OK': 'Oklahoma',
+		'ID': 'Idaho',
+		'OR': 'Oregon',
+		'IL': 'Illinois',
+		'PA': 'Pennsylvania',
+		'IN': 'Indiana',
+		'RI': 'Rhode Island',
+		'IA': 'Iowa',
+		'SC': 'South Carolina',
+		'KS': 'Kansas',
+		'SD': 'South Dakota',
+		'KY': 'Kentucky',
+		'TN': 'Tennessee',
+		'LA': 'Louisiana',
+		'TX': 'Texas',
+		'ME': 'Maine',
+		'UT': 'Utah',
+		'MD': 'Maryland',
+		'VT': 'Vermont',
+		'MA': 'Massachusetts',
+		'VA': 'Virginia',
+		'MI': 'Michigan',
+		'WA': 'Washington',
+		'MN': 'Minnesota',
+		'WV': 'West Virginia',
+		'MS': 'Mississippi',
+		'WI': 'Wisconsin',
+		'MO': 'Missouri',
+		'WY': 'Wyoming',
+	}[abbr]
