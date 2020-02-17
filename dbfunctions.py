@@ -3,7 +3,7 @@ import psycopg2
 
 def get_details(job_id, db):
 	job_listings_query = """
-		SELECT * FROM job_listings WHERE job_id = %(job_id)s
+		SELECT * FROM job_listings WHERE id = %(job_id)s
 	"""
 	cur = db.cursor()
 	cur.execute(job_listings_query, {'job_id': job_id})
@@ -11,10 +11,10 @@ def get_details(job_id, db):
 
 	output = {
 		'job_id': results[0],
-		'title':results[1],
+		'title': results[1],
 		'post_timestamp': results[2],
 		'pay_min': results[3],
-		'pay_max':results[4],
+		'pay_max': results[4],
 		'pay_exact': results[5],
 		'seniority': results[6]
 	}
@@ -26,29 +26,29 @@ def get_details(job_id, db):
 	results = cur.fetchone()
 
 	output.update({
-		'description':results[2]
+		'description': results[2]
 	})
 
-	jobs_keyphrases_query = """
-		SELECT * FROM jobs_keyphrase WHERE job_id = %(job_id)s
+	job_keyphrases_query = """
+		SELECT * FROM job_keyphrase WHERE job_id = %(job_id)s
 	"""
-	cur.execute(jobs_keyphrases_query, {'job_id': job_id})
+	cur.execute(job_keyphrases_query, {'job_id': job_id})
 	results = [result[2] for result in cur.fetchall()]
 
 	output.update({
 		'keyphrases': results,
 	})
 
-	jobs_companies_query = """
+	job_companies_query = """
 		SELECT *
-		FROM jobs_companies
+		FROM job_companies
 		INNER JOIN companies
-		ON jobs_companies.company_id = companies.id
+		ON job_companies.company_id = companies.id
 		WHERE job_id = %(job_id)s
 		LIMIT 1
 	"""
 	cur.execute(
-		jobs_companies_query,
+		job_companies_query,
 		{'job_id': job_id}
 	)
 	results = cur.fetchone()
@@ -60,16 +60,16 @@ def get_details(job_id, db):
 		'company_revenue':results[7]
 	})
 
-	jobs_locations_query = """
+	job_locations_query = """
 		SELECT *
-		FROM jobs_locations
+		FROM job_locations
 		INNER JOIN locations
-		ON jobs_locations.location_id = locations.id
+		ON job_locations.location_id = locations.id
 		WHERE job_id = %(job_id)s
 		LIMIT 1;
 	"""
 	cur.execute(
-		jobs_locations_query,
+		job_locations_query,
 		{'job_id': job_id}
 	)
 	results = cur.fetchone()
