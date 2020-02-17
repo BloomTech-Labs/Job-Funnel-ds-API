@@ -131,7 +131,7 @@ def get_details(job_id, db):
 	return output
 
 
-def get_jobs(db, count=100, city=None, state_province=None, country='US', title=None):
+def get_jobs(db, count=100, city=None, state_province=None, country='US', title=None, before=None, after=None, salary_min=None, salary_max=None, seniority=None):
 	state_province = handle_state_province(state_province)
 
 	cur = db.cursor()
@@ -153,10 +153,41 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 			ON job_listings.id = jobs_locs.job_id
 		'''
 
+	where_subquery = '''
+		WHERE '' = ''
+	'''
+	if before is not None:
+		where_subquery += '''
+			AND post_date_utc < TO_TIMESTAMP(%(before)s)
+		'''
+	if after is not None:
+		where_subquery += '''
+			AND post_date_utc > TO_TIMESTAMP(%(after)s)
+		'''
+	if seniority is not None:
+		where_subquery += '''
+			AND seniority = %(seniority)s
+		'''
+	if salary_min is not None:
+		where_subquery += '''
+			AND (
+				pay_min > %(salary_min)s
+				OR pay_exact > %(salary_min)s
+			)
+		'''
+	if salary_max is not None:
+		where_subquery += '''
+			AND (
+				pay_max > %(salary_max)s
+				OR pay_exact > %(salary_max)s
+			)
+		'''
+
 	job_results_query = f'''
-		SELECT job_listings.id, job_listings.title, job_listings.post_date_utc
+		SELECT job_listings.id, job_listings.title, EXTRACT(epoch FROM job_listings.post_date_utc)
 		FROM job_listings
 		{location_subquery}
+		{where_subquery}
 		ORDER BY random()
 		LIMIT %(count)s;
 	'''
@@ -167,7 +198,13 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 			'count': count,
 			'city': city,
 			'state_province': state_province,
-			'country': country
+			'country': country,
+			'before': before,
+			'after': after,
+			'seniority': seniority,
+			'salary_min': salary_min,
+			'salary_max': salary_max,
+			'title': title,
 		}
 	)
 	results = cur.fetchall()

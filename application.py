@@ -18,6 +18,11 @@ def search():
 	country = request.args.get('country', 'US')
 	title = request.args.get('title', None)
 	count = request.args.get('count', 100)
+	before = request.args.get('before', None)
+	after = request.args.get('after', None)
+	seniority = request.args.get('seniority', None)
+	salary_min = request.args.get('salary_min', None)
+	salary_max = request.args.get('salary_max', None)
 	with psycopg2.connect(
 			dbname=config("DB_DB"),
 			user=config("DB_USER"),
@@ -31,7 +36,12 @@ def search():
 			city=city,
 			state_province=state_province,
 			country=country,
-			title=title
+			title=title,
+			salary_max=salary_max,
+			salary_min=salary_min,
+			before=before,
+			after=after,
+			seniority=seniority,
 		)
 	ret = {
 		'count': len(output),
