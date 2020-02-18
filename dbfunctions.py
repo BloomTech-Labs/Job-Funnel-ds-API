@@ -242,14 +242,18 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 
 		resultList = []
 		for result in results:
-			resultsjson = {
-				'job_id': result[0],
-				'title': result[1],
-				'post_timestamp': result[2],
-				'relevance': None,
-				'resume_score': None,
-			}
-			resultList.append(resultsjson)
+			try:
+				resultsjson = {
+					'job_id': result[0],
+					'title': result[1],
+					'post_timestamp': result[2],
+					'relevance': None,
+					'resume_score': None,
+				}
+				resultsjson.update(get_details(result[0], db))
+				resultList.append(resultsjson)
+			except Exception:
+				pass
 
 	except Exception as e:
 		resultList = []
