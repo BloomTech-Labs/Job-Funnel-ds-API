@@ -52,7 +52,7 @@ def get_details(job_id, db):
 
 	try:
 		job_companies_query = """
-			SELECT name, description, size, revenue
+			SELECT name, description, size, revenue, logo_url
 			FROM job_companies
 			INNER JOIN companies
 			ON job_companies.company_id = companies.id
@@ -69,14 +69,16 @@ def get_details(job_id, db):
 			'company_name': results[0],
 			'company_description': results[1],
 			'company_size': results[2],
-			'company_revenue': results[3]
+			'company_revenue': results[3],
+			'company_logo_url': results[4],
 		})
 	except Exception:
 		output.update({
 			'company_name': None,
 			'company_description': None,
 			'company_size': None,
-			'company_revenue': None
+			'company_revenue': None,
+			'company_logo_url': None,
 		})
 
 	try:
