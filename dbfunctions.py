@@ -4,7 +4,7 @@ import re
 
 def get_details(job_id, db):
 	job_listings_query = """
-		SELECT id, title, post_date_utc, pay_min, pay_max, pay_exact, seniority FROM job_listings WHERE id = %(job_id)s
+		SELECT id, title, EXTRACT(epoch FROM post_date_utc), pay_min, pay_max, pay_exact, seniority FROM job_listings WHERE id = %(job_id)s
 	"""
 	cur = db.cursor()
 	cur.execute(job_listings_query, {'job_id': job_id})
