@@ -17,7 +17,7 @@ def search():
 	state_province = request.args.get('state_province', None)
 	country = request.args.get('country', 'US')
 	title = request.args.get('title', None)
-	count = request.args.get('count', 100)
+	count = request.args.get('count', 50)
 	before = request.args.get('before', None)
 	after = request.args.get('after', None)
 	seniority = request.args.get('seniority', None)
