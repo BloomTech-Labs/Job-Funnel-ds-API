@@ -6,7 +6,7 @@ from decouple import config
 
 app = Flask(__name__)
 
-@app.route('/search')
+@app.route('/search', methods=['GET'])
 def search():
     """ when someone types /search in the url this function will work to
     present what we want for this page """
