@@ -32,9 +32,9 @@
 
 ## 2. Introduction
 
-Base URL: TBD
+Base URL: http://quickhire-api-dev.j535vysrhe.us-east-1.elasticbeanstalk.com/
 
-The API accepts `application/json` requests and returns `application/json` responses.
+The API accepts url-encoded GET requests and returns `application/json` responses.
 
 
 ## 3. Resources
@@ -156,6 +156,26 @@ State or province in which to search.
 
 Country in which to search.
 
+`before` *Int*, Optional
+
+Timestamp before which the job was posted.
+
+`after` *Int*, Optional
+
+Timestamp after which the job was posted.
+
+`seniority` *String*, Optional
+
+Seniority level of jobs to search for.
+
+`salary_min` *Int*, Optional
+
+Minimum salary of jobs to search for.
+
+`salary_max` *Int*, Optional
+
+Maximum salary of jobs to search for.
+
 ##### 3.1.3.2. Example request
 ```json
 {
@@ -249,6 +269,8 @@ The salary of the job, if available.
 `seniority` *String* or *null*
 
 The seniority level of the job.
+
+A link to the application page of the job.
 
 `lambda_hireability` *Float* or *null*
 
