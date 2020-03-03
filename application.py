@@ -4,7 +4,10 @@ import psycopg2
 from dbfunctions import get_jobs
 from decouple import config
 
+from modelfunctions import LDA17Manager
+
 application = Flask(__name__)
+lda17 = LDA17Manager()
 
 
 @application.route('/search')
@@ -71,6 +74,14 @@ def details():
 	) as psql_conn:
 		output = get_details(job_id, psql_conn)
 	return jsonify(output)
+
+
+@application.route('/check-fresh')
+def check_fresh():
+	'''
+	Checks whether the NN model is <1hr old, and pulls a new copy if it's older.
+	'''
+	lda17.refresh()
 
 
 @application.before_request
