@@ -1,0 +1,55 @@
+
+CREATE TABLE IF NOT EXISTS job_listings (
+	id SERIAL NOT NULL PRIMARY KEY,
+	post_date_utc TIMESTAMP,
+	pay_min INT,
+	pay_max INT,
+	pay_exact INT,
+	title TEXT,
+	seniority TEXT
+);
+
+
+CREATE TABLE IF NOT EXISTS companies (
+	id SERIAL NOT NULL PRIMARY KEY,
+	name TEXT,
+	description TEXT,
+	size INT,
+	revenue INT
+);
+
+
+CREATE TABLE IF NOT EXISTS locations (
+	id SERIAL NOT NULL PRIMARY KEY,
+	city TEXT,
+	state_province TEXT,
+	country TEXT
+);
+
+
+CREATE TABLE IF NOT EXISTS jobs_descriptions (
+	id SERIAL NOT NULL,
+	job_id INT NOT NULL REFERENCES job_listings(id),
+	description TEXT
+);
+
+
+CREATE TABLE IF NOT EXISTS jobs_keyphrases (
+	id SERIAL PRIMARY KEY,
+	job_id INT NOT NULL REFERENCES job_listings(id),
+	keyphrase TEXT
+);
+
+
+CREATE TABLE IF NOT EXISTS jobs_locations (
+	id SERIAL PRIMARY KEY,
+	job_id INT NOT NULL REFERENCES job_listings(id),
+	location_id INT NOT NULL REFERENCES locations(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS jobs_companies (
+	id SERIAL PRIMARY KEY,
+	job_id INT NOT NULL REFERENCES job_listings(id),
+	company_id INT NOT NULL REFERENCES companies(id)
+);
