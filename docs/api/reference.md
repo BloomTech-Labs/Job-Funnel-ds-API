@@ -270,8 +270,6 @@ The salary of the job, if available.
 
 The seniority level of the job.
 
-`link` *String* or *null*
-
 A link to the application page of the job.
 
 `lambda_hireability` *Float* or *null*
