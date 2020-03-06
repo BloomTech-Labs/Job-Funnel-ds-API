@@ -35,7 +35,7 @@ _model\_and\_save\_topics_ iterates through each model that is a subclass of _To
 
 #### 3.1.1. Running Populators
 
-Two utility scripts (`run_scrapers.py` and `run_models.py`) are provided, to initialize a _Populator_ and run _retrieve\_and\_save\_data_ and _model\_and\_save\_topics_, respectively.
+Two utility scripts (`run_scrapers.py` and `run_models.py`) are provided, to initialize a _Populator_ and run _retrieve\_and\_save\_data_ and _model\_and\_save\_topics_, respectively. These scripts are what the `ds-Data` Utility API run (then disown) to start the scrapers and models.
 
 ### 3.2. Scrapers
 
