@@ -1,0 +1,965 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.5
+-- Dumped by pg_dump version 12.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+--
+-- Name: companies; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.companies (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    description text,
+    size integer,
+    revenue bigint,
+    logo_url text
+);
+
+
+ALTER TABLE public.companies OWNER TO postgres;
+
+--
+-- Name: companies_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.companies_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.companies_id_seq OWNER TO postgres;
+
+--
+-- Name: companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
+
+
+--
+-- Name: job_companies; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.job_companies (
+    id integer NOT NULL,
+    company_id integer NOT NULL,
+    job_id integer NOT NULL
+);
+
+
+ALTER TABLE public.job_companies OWNER TO postgres;
+
+--
+-- Name: job_companies_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.job_companies_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.job_companies_id_seq OWNER TO postgres;
+
+--
+-- Name: job_companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.job_companies_id_seq OWNED BY public.job_companies.id;
+
+
+--
+-- Name: job_descriptions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.job_descriptions (
+    id integer NOT NULL,
+    job_id integer NOT NULL,
+    description text NOT NULL
+);
+
+
+ALTER TABLE public.job_descriptions OWNER TO postgres;
+
+--
+-- Name: job_descriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.job_descriptions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.job_descriptions_id_seq OWNER TO postgres;
+
+--
+-- Name: job_descriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.job_descriptions_id_seq OWNED BY public.job_descriptions.id;
+
+
+--
+-- Name: job_keyphrases; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.job_keyphrases (
+    id integer NOT NULL,
+    job_id integer NOT NULL,
+    keyphrase character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.job_keyphrases OWNER TO postgres;
+
+--
+-- Name: job_keyphrases_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.job_keyphrases_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.job_keyphrases_id_seq OWNER TO postgres;
+
+--
+-- Name: job_keyphrases_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.job_keyphrases_id_seq OWNED BY public.job_keyphrases.id;
+
+
+--
+-- Name: job_links; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.job_links (
+    id integer NOT NULL,
+    job_id integer NOT NULL,
+    external_url text NOT NULL
+);
+
+
+ALTER TABLE public.job_links OWNER TO postgres;
+
+--
+-- Name: job_links_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.job_links_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.job_links_id_seq OWNER TO postgres;
+
+--
+-- Name: job_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.job_links_id_seq OWNED BY public.job_links.id;
+
+
+--
+-- Name: job_listings; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.job_listings (
+    id integer NOT NULL,
+    post_date_utc timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    pay_min integer,
+    pay_max integer,
+    pay_exact integer,
+    title character varying(255) NOT NULL,
+    seniority character varying(255)
+);
+
+
+ALTER TABLE public.job_listings OWNER TO postgres;
+
+--
+-- Name: job_listings_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.job_listings_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.job_listings_id_seq OWNER TO postgres;
+
+--
+-- Name: job_listings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.job_listings_id_seq OWNED BY public.job_listings.id;
+
+
+--
+-- Name: job_locations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.job_locations (
+    id integer NOT NULL,
+    job_id integer NOT NULL,
+    location_id integer NOT NULL
+);
+
+
+ALTER TABLE public.job_locations OWNER TO postgres;
+
+--
+-- Name: job_locations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.job_locations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.job_locations_id_seq OWNER TO postgres;
+
+--
+-- Name: job_locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.job_locations_id_seq OWNED BY public.job_locations.id;
+
+
+--
+-- Name: knex_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.knex_migrations (
+    id integer NOT NULL,
+    name character varying(255),
+    batch integer,
+    migration_time timestamp with time zone
+);
+
+
+ALTER TABLE public.knex_migrations OWNER TO postgres;
+
+--
+-- Name: knex_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.knex_migrations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.knex_migrations_id_seq OWNER TO postgres;
+
+--
+-- Name: knex_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.knex_migrations_id_seq OWNED BY public.knex_migrations.id;
+
+
+--
+-- Name: knex_migrations_lock; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.knex_migrations_lock (
+    index integer NOT NULL,
+    is_locked integer
+);
+
+
+ALTER TABLE public.knex_migrations_lock OWNER TO postgres;
+
+--
+-- Name: knex_migrations_lock_index_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.knex_migrations_lock_index_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.knex_migrations_lock_index_seq OWNER TO postgres;
+
+--
+-- Name: knex_migrations_lock_index_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.knex_migrations_lock_index_seq OWNED BY public.knex_migrations_lock.index;
+
+
+--
+-- Name: lda17_topics; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.lda17_topics (
+    id integer NOT NULL,
+    job_id integer,
+    lda0 double precision NOT NULL,
+    lda1 double precision NOT NULL,
+    lda2 double precision NOT NULL,
+    lda3 double precision NOT NULL,
+    lda4 double precision NOT NULL,
+    lda5 double precision NOT NULL,
+    lda6 double precision NOT NULL,
+    lda7 double precision NOT NULL,
+    lda8 double precision NOT NULL,
+    lda9 double precision NOT NULL,
+    lda10 double precision NOT NULL,
+    lda11 double precision NOT NULL,
+    lda12 double precision NOT NULL,
+    lda13 double precision NOT NULL,
+    lda14 double precision NOT NULL,
+    lda15 double precision NOT NULL,
+    lda16 double precision NOT NULL,
+    in_nn boolean DEFAULT false NOT NULL
+);
+
+
+ALTER TABLE public.lda17_topics OWNER TO postgres;
+
+--
+-- Name: lda17_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.lda17_topics_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.lda17_topics_id_seq OWNER TO postgres;
+
+--
+-- Name: lda17_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.lda17_topics_id_seq OWNED BY public.lda17_topics.id;
+
+
+--
+-- Name: locations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.locations (
+    id integer NOT NULL,
+    city character varying(255) NOT NULL,
+    state_province character varying(255) NOT NULL,
+    country character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.locations OWNER TO postgres;
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.locations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.locations_id_seq OWNER TO postgres;
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.locations_id_seq OWNED BY public.locations.id;
+
+
+--
+-- Name: skills; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.skills (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.skills OWNER TO postgres;
+
+--
+-- Name: skills_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.skills_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.skills_id_seq OWNER TO postgres;
+
+--
+-- Name: skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.skills_id_seq OWNED BY public.skills.id;
+
+
+--
+-- Name: user_jobs; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_jobs (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    job_id integer NOT NULL,
+    status character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.user_jobs OWNER TO postgres;
+
+--
+-- Name: user_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.user_jobs_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.user_jobs_id_seq OWNER TO postgres;
+
+--
+-- Name: user_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.user_jobs_id_seq OWNED BY public.user_jobs.id;
+
+
+--
+-- Name: user_skills; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_skills (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    skill_id integer NOT NULL
+);
+
+
+ALTER TABLE public.user_skills OWNER TO postgres;
+
+--
+-- Name: user_skills_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.user_skills_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.user_skills_id_seq OWNER TO postgres;
+
+--
+-- Name: user_skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.user_skills_id_seq OWNED BY public.user_skills.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    first_name character varying(255) NOT NULL,
+    last_name character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    user_type character varying(255) NOT NULL,
+    company_id integer,
+    location_id integer,
+    education character varying(255),
+    about character varying(255),
+    profile_img character varying(255),
+    portfolio_url character varying(255),
+    github_url character varying(255),
+    linkedin_url character varying(255),
+    resume character varying(255)
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: companies id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.companies ALTER COLUMN id SET DEFAULT nextval('public.companies_id_seq'::regclass);
+
+
+--
+-- Name: job_companies id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_companies ALTER COLUMN id SET DEFAULT nextval('public.job_companies_id_seq'::regclass);
+
+
+--
+-- Name: job_descriptions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_descriptions ALTER COLUMN id SET DEFAULT nextval('public.job_descriptions_id_seq'::regclass);
+
+
+--
+-- Name: job_keyphrases id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_keyphrases ALTER COLUMN id SET DEFAULT nextval('public.job_keyphrases_id_seq'::regclass);
+
+
+--
+-- Name: job_links id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_links ALTER COLUMN id SET DEFAULT nextval('public.job_links_id_seq'::regclass);
+
+
+--
+-- Name: job_listings id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_listings ALTER COLUMN id SET DEFAULT nextval('public.job_listings_id_seq'::regclass);
+
+
+--
+-- Name: job_locations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_locations ALTER COLUMN id SET DEFAULT nextval('public.job_locations_id_seq'::regclass);
+
+
+--
+-- Name: knex_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.knex_migrations ALTER COLUMN id SET DEFAULT nextval('public.knex_migrations_id_seq'::regclass);
+
+
+--
+-- Name: knex_migrations_lock index; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.knex_migrations_lock ALTER COLUMN index SET DEFAULT nextval('public.knex_migrations_lock_index_seq'::regclass);
+
+
+--
+-- Name: lda17_topics id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lda17_topics ALTER COLUMN id SET DEFAULT nextval('public.lda17_topics_id_seq'::regclass);
+
+
+--
+-- Name: locations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.locations ALTER COLUMN id SET DEFAULT nextval('public.locations_id_seq'::regclass);
+
+
+--
+-- Name: skills id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.skills ALTER COLUMN id SET DEFAULT nextval('public.skills_id_seq'::regclass);
+
+
+--
+-- Name: user_jobs id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_jobs ALTER COLUMN id SET DEFAULT nextval('public.user_jobs_id_seq'::regclass);
+
+
+--
+-- Name: user_skills id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_skills ALTER COLUMN id SET DEFAULT nextval('public.user_skills_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: job_companies job_companies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_companies
+    ADD CONSTRAINT job_companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: job_descriptions job_descriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_descriptions
+    ADD CONSTRAINT job_descriptions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: job_keyphrases job_keyphrases_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_keyphrases
+    ADD CONSTRAINT job_keyphrases_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: job_links job_links_external_url_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_links
+    ADD CONSTRAINT job_links_external_url_unique UNIQUE (external_url);
+
+
+--
+-- Name: job_links job_links_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_links
+    ADD CONSTRAINT job_links_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: job_listings job_listings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_listings
+    ADD CONSTRAINT job_listings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: job_locations job_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_locations
+    ADD CONSTRAINT job_locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: knex_migrations_lock knex_migrations_lock_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.knex_migrations_lock
+    ADD CONSTRAINT knex_migrations_lock_pkey PRIMARY KEY (index);
+
+
+--
+-- Name: knex_migrations knex_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.knex_migrations
+    ADD CONSTRAINT knex_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lda17_topics lda17_topics_job_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lda17_topics
+    ADD CONSTRAINT lda17_topics_job_id_key UNIQUE (job_id);
+
+
+--
+-- Name: lda17_topics lda17_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lda17_topics
+    ADD CONSTRAINT lda17_topics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: skills skills_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.skills
+    ADD CONSTRAINT skills_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_jobs user_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_jobs
+    ADD CONSTRAINT user_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_skills user_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_skills
+    ADD CONSTRAINT user_skills_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_skills user_skills_skill_id_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_skills
+    ADD CONSTRAINT user_skills_skill_id_unique UNIQUE (skill_id);
+
+
+--
+-- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_unique UNIQUE (email);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: job_companies job_companies_company_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_companies
+    ADD CONSTRAINT job_companies_company_id_foreign FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_companies job_companies_job_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_companies
+    ADD CONSTRAINT job_companies_job_id_foreign FOREIGN KEY (job_id) REFERENCES public.job_listings(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_descriptions job_descriptions_job_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_descriptions
+    ADD CONSTRAINT job_descriptions_job_id_foreign FOREIGN KEY (job_id) REFERENCES public.job_listings(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_keyphrases job_keyphrases_job_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_keyphrases
+    ADD CONSTRAINT job_keyphrases_job_id_foreign FOREIGN KEY (job_id) REFERENCES public.job_listings(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_links job_links_job_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_links
+    ADD CONSTRAINT job_links_job_id_foreign FOREIGN KEY (job_id) REFERENCES public.job_listings(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_locations job_locations_job_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_locations
+    ADD CONSTRAINT job_locations_job_id_foreign FOREIGN KEY (job_id) REFERENCES public.job_listings(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_locations job_locations_location_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.job_locations
+    ADD CONSTRAINT job_locations_location_id_foreign FOREIGN KEY (location_id) REFERENCES public.locations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: lda17_topics lda17_topics_job_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lda17_topics
+    ADD CONSTRAINT lda17_topics_job_id_fkey FOREIGN KEY (job_id) REFERENCES public.job_listings(id);
+
+
+--
+-- Name: user_jobs user_jobs_job_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_jobs
+    ADD CONSTRAINT user_jobs_job_id_foreign FOREIGN KEY (job_id) REFERENCES public.job_listings(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_jobs user_jobs_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_jobs
+    ADD CONSTRAINT user_jobs_user_id_foreign FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_skills user_skills_skill_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_skills
+    ADD CONSTRAINT user_skills_skill_id_foreign FOREIGN KEY (skill_id) REFERENCES public.skills(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_skills user_skills_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_skills
+    ADD CONSTRAINT user_skills_user_id_foreign FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: users users_company_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_company_id_foreign FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE SET NULL;
+
+
+--
+-- Name: users users_location_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_location_id_foreign FOREIGN KEY (location_id) REFERENCES public.locations(id) ON DELETE SET NULL;
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM rdsadmin;
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
