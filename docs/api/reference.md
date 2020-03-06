@@ -54,6 +54,8 @@ The search object is returned by [the /search endpoint](#313-the-search-endpoint
 
 A list of [result objects](#312-the-result-object). If no results were found, this list may be empty.
 
+NOTE: Per web team request, this currently instead returns a list of [details objects](#321-the-details-object).
+
 `count` *Int*
 
 The count of results returned.
