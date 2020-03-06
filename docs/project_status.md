@@ -19,6 +19,8 @@
 
 See [architecture.md](./architecture.md) for details on the current project state.
 
+There is not currently any code coverage.
+
 ## 3. Future
 
 ### 3.1. Top Priorities
@@ -42,6 +44,8 @@ In the aforementioned hacky methodology, the models are shared between `ds-Data`
 - Implement Hireability score
 	- One of the primary value points of the project, the hireability score is a value that assesses how relevant a job is to Lambda graduates, based on a classification model trained on historical grads (and what jobs they found).
 	- If you can't get data from Lambda, might want to scrape LinkedIn for people associated with Lambda School, and what jobs they have.
+- Add tests
+	- There's not currently any test coverage.
 
 ### 3.3. Minor Fixes
 
