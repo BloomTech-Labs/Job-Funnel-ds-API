@@ -9,12 +9,15 @@
 	- [3.1. Top Priorities](#31-top-priorities)
 		- [3.1.1. Implement lda17](#311-implement-lda17)
 		- [3.1.2. Investigate best methods of sharing models](#312-investigate-best-methods-of-sharing-models)
+		- [3.1.3. Add more scrapers](#313-add-more-scrapers)
 	- [3.2. Important Changes](#32-important-changes)
 	- [3.3. Minor Fixes](#33-minor-fixes)
 
 <!-- /TOC -->
 
 ## 2. Current
+
+See [architecture.md](./architecture.md) for details on the current project state.
 
 ## 3. Future
 
@@ -29,6 +32,8 @@ Note that model results should be provided via the `relevance` parameter on jobs
 #### 3.1.2. Investigate best methods of sharing models
 
 In the aforementioned hacky methodology, the models are shared between `ds-Data` and `ds-API` over HTTP. This is _not_ a good way of doing this. Amazon EFS is likely the simplest solution, but further investigation may be warranted.
+
+#### 3.1.3. Add more scrapers
 
 ### 3.2. Important Changes
 
