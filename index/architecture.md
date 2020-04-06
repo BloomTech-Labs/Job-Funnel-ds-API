@@ -47,7 +47,7 @@ Models live in `ds-Data` at `datafunctions/model/models`. Each retriever *MUST* 
 
 ### 3.4. Hosting
 
-The `ds-Data/dev` branch is hosted on Amazon Elastic Beanstalk, under application `quickhire`, environment `Quickhire-data-dev`.
+The `ds-Data/dev` branch is hosted on Amazon Elastic Beanstalk, under app `quickhire`, environment `Quickhire-data-dev`.
 
 `ds-API/dev` is on Elastic Beanstalk, `quickhire`, `Quickhire-API-dev`.
 
@@ -55,7 +55,7 @@ Both are deployed with a CodePipeline. (NOTE: The `quickhire-api-dev` CodePipeli
 
 ### 3.5. Utility API
 
-The Utility API can be found in `ds-Data` at `application.py` and provides control and monitoring functionality for the scrapers.
+The Utility API can be found in `ds-Data` at `app.py` and provides control and monitoring functionality for the scrapers.
 
 The following endpoints are available:
 - Health check: /health
@@ -65,7 +65,7 @@ The following endpoints are available:
 - Start models: /start-models
 	- NOTE: This starts the models in a separate process then disowns that process, as otherwise the models might get timed out.
 - Kill models: /kill-models
-- Application logs: /logs?file=application.py
+- app logs: /logs?file=app.py
 - Scraper logs: /logs?file=run_scrapers.py
 - Model logs: /logs?file=run_models.py
 

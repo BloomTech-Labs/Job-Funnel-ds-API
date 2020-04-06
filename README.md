@@ -1,12 +1,12 @@
 ### QUICK HIRE
 
-This project is part of the data science group for Labs project Quick Hire. Quick hire is a one stop job application portal for specifically for Lambda School students. 
+This project is part of the data science group for Labs project Quick Hire. Quick hire is a one stop job app portal for specifically for Lambda School students. 
 
 You can find the live project at [QuickHire.dev](https://quickhire.dev)
 
 ## Quickhire DS-API Description
 
-This repository holds code for the Flask application (migration to FastAPI pending) and database functions for the Data Science portion of Quick Hire. It also includes documentation for the code until the migration to FastAPI with its automatically generated documentation is complete. It will also include tests from Starlette (comes with FastAPI) once migration is complete. 
+This repository holds code for the Flask app (migration to FastAPI pending) and database functions for the Data Science portion of Quick Hire. It also includes documentation for the code until the migration to FastAPI with its automatically generated documentation is complete. It will also include tests from Starlette (comes with FastAPI) once migration is complete. 
 
 ### Methods Used
 
@@ -32,7 +32,7 @@ This repository holds code for the Flask application (migration to FastAPI pendi
 
 The database (PostgreSQL) is hosted on AWS RDS (database-1). A summary of the structure can be found at docs/db_structure/db_structure.md, and schema details at docs/db_structure/awsrds.schema.
 
-The web application is hosted on AWS elastic beanstalk. The documentation can be found here: https://github.com/Lambda-School-Labs/Job-Funnel-ds-API/blob/master/docs/api/reference.md until migration to FastAPI is complete.
+The web app is hosted on AWS elastic beanstalk. The documentation can be found here: https://github.com/Lambda-School-Labs/Job-Funnel-ds-API/blob/master/docs/api/reference.md until migration to FastAPI is complete.
 
 Test Suite not implemented yet but to be updated here. 
 

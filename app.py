@@ -4,10 +4,10 @@ import psycopg2
 from dbfunctions import get_jobs
 from decouple import config
 
-application = Flask(__name__)
+app = Flask(__name__)
 
 
-@application.route('/search')
+@app.route('/search')
 def search():
 	""" when someone types /search in the url this function will work to
 	present what we want for this page """
@@ -50,7 +50,7 @@ def search():
 	return jsonify(ret)
 
 
-@application.route('/details')
+@app.route('/details')
 def details():
 	""" when someone types /details in the url this function will work to
 	present what we want for this page """
@@ -73,7 +73,7 @@ def details():
 	return jsonify(output)
 
 
-@application.before_request
+@app.before_request
 def before_request():  # CORS preflight
 	def _build_cors_prelight_response():
 		response = make_response()
@@ -85,7 +85,7 @@ def before_request():  # CORS preflight
 		return _build_cors_prelight_response()
 
 
-@application.after_request
+@app.after_request
 def after_request(response):  # CORS headers
 	header = response.headers
 	header['Access-Control-Allow-Origin'] = '*'
@@ -93,4 +93,4 @@ def after_request(response):  # CORS headers
 
 
 if __name__ == "__main__":
-	application.run()
+	app.run()
