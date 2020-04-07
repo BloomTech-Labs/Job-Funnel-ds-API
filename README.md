@@ -60,7 +60,7 @@ Nonetheless, if you want to work on this locally:
 
 2. Clone the other repo which has the web scraper and models: https://github.com/Lambda-School-Labs/Job-Funnel-ds-Data
 
-3. Create your own database and login credentials setup since the .gitignore has our live database credentials. Install any libraries from requirements of both repos that weren't added. 
+3. Create your own database and login credentials setup since the .gitignore has our live database credentials. Install any libraries from requirements of both repos that weren't added. If you are Lambda Labs students, your TL should give you the  AWS DB credentials or .env files. Else you can find them by DM'ing previous team members. 
 
 4. Run the scraper in the other repo to begin populating the data base.
 
