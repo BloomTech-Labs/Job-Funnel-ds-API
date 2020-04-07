@@ -5,6 +5,7 @@ import psycopg2
 from dbfunctions import get_jobs
 from decouple import config
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -94,6 +95,14 @@ def after_request(response):  # CORS headers
 	header = response.headers
 	header['Access-Control-Allow-Origin'] = '*'
 	return response'''
+
+app.add_middleware(
+CORSMiddleware,
+allow_origins=["*"],
+allow_credentials=True,
+allow_methods=["*"],
+allow_headers=["*"]
+)
 
 
 if __name__ == "__main__":
