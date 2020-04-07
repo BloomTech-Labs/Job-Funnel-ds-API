@@ -1,18 +1,22 @@
 from flask import Flask, jsonify, request, make_response
+from fastapi import FastAPI 
 from dbfunctions import get_details
 import psycopg2
 from dbfunctions import get_jobs
 from decouple import config
+import uvicorn
 
-app = Flask(__name__)
+app = FastAPI()
 
 
-@app.route('/search')
-def search():
+@app.get('/search')
+def search(job_id: int = None, city: str = None, state_province: str = None, country: str = None, 
+		   title: str = None, count: int = 50, before: int = None, after: int = None, seniority: str = None,
+		   salary_min: int = None, salary_max: int = None):
 	""" when someone types /search in the url this function will work to
 	present what we want for this page """
 
-	job_id = request.args.get('job_id', None)
+	'''job_id = request.args.get('job_id', None)
 	city = request.args.get('city', None)
 	state_province = request.args.get('state_province', None)
 	country = request.args.get('country', 'US')
@@ -22,7 +26,7 @@ def search():
 	after = request.args.get('after', None)
 	seniority = request.args.get('seniority', None)
 	salary_min = request.args.get('salary_min', None)
-	salary_max = request.args.get('salary_max', None)
+	salary_max = request.args.get('salary_max', None)'''
 	with psycopg2.connect(
 			dbname=config("DB_DB"),
 			user=config("DB_USER"),
@@ -47,10 +51,10 @@ def search():
 		'count': len(output),
 		'responses': output
 	}
-	return jsonify(ret)
+	return ret
 
 
-@app.route('/details')
+'''@app.route('/details')
 def details():
 	""" when someone types /details in the url this function will work to
 	present what we want for this page """
@@ -89,8 +93,9 @@ def before_request():  # CORS preflight
 def after_request(response):  # CORS headers
 	header = response.headers
 	header['Access-Control-Allow-Origin'] = '*'
-	return response
+	return response'''
 
 
 if __name__ == "__main__":
-	app.run()
+	uvicorn.run(app, host="127.0.0.1", port=5000)
+	
