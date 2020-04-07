@@ -11,7 +11,7 @@ app = FastAPI()
 
 
 @app.get('/search')
-def search(job_id: int = None, city: str = None, state_province: str = None, country: str = None, 
+async def search(job_id: int = None, city: str = None, state_province: str = None, country: str = None, 
 		   title: str = None, count: int = 50, before: int = None, after: int = None, seniority: str = None,
 		   salary_min: int = None, salary_max: int = None):
 	""" when someone types /search in the url this function will work to
@@ -56,7 +56,7 @@ def search(job_id: int = None, city: str = None, state_province: str = None, cou
 
 
 @app.get('/details')
-def details(job_id: int = None):
+async def details(job_id: int = None):
 	""" when someone types /details in the url this function will work to
 	present what we want for this page """
 	# args = request.get_json()
@@ -76,6 +76,8 @@ def details(job_id: int = None):
 	) as psql_conn:
 		output = get_details(job_id, psql_conn)
 	return output
+
+
 
 
 '''@app.before_request
