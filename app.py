@@ -54,13 +54,13 @@ def search(job_id: int = None, city: str = None, state_province: str = None, cou
 	return ret
 
 
-'''@app.route('/details')
-def details():
+@app.get('/details')
+def details(job_id: int = None):
 	""" when someone types /details in the url this function will work to
 	present what we want for this page """
 	# args = request.get_json()
-	args = request.args  # Use query args for simplicity for now
-	job_id = args.get('job_id', None)
+	'''args = request.args  # Use query args for simplicity for now
+	job_id = args.get('job_id', None)'''
 	if job_id is None:
 		output = {
 			'error': 'job_id parameter is required'
@@ -74,10 +74,10 @@ def details():
 			port=config("DB_PORT")
 	) as psql_conn:
 		output = get_details(job_id, psql_conn)
-	return jsonify(output)
+	return output
 
 
-@app.before_request
+'''@app.before_request
 def before_request():  # CORS preflight
 	def _build_cors_prelight_response():
 		response = make_response()
