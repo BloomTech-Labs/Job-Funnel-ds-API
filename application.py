@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, make_response
+# from flask import Flask, jsonify, request, make_response
 from fastapi import FastAPI 
 from dbfunctions import get_details
 import psycopg2
@@ -7,7 +7,7 @@ from decouple import config
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+application = app = FastAPI()
 
 
 @app.get('/search')
@@ -107,6 +107,6 @@ allow_headers=["*"]
 )
 
 if __name__ == "__main__":
-	uvicorn.run(app)
+	uvicorn.run(application)
 
 	
