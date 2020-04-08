@@ -41,13 +41,21 @@ Two utility scripts (`run_scrapers.py` and `run_models.py`) are provided, to ini
 
 Scrapers live in `ds-Data` at `datafunctions/retrieve/retrievers`. Each retriever *MUST* subclass the _DataRetriever_ base class (`datafunctions/retrieve/retrieverfunctions.py:DataRetriever`) and implement the _get\_and\_store\_data_ method (the _get\_data_ method was planned as an alternative in which the _Populator_ performs deduplication and database access, but was not fully implemented).
 
+
+You can double check the Utility API for the scrapers at http://quickhire-api-dev.j535vysrhe.us-east-1.elasticbeanstalk.com/. If you ever want to double check everything is running properly, check:
+http://quickhire-api-dev.j535vysrhe.us-east-1.elasticbeanstalk.com/health
+http://quickhire-api-dev.j535vysrhe.us-east-1.elasticbeanstalk.com/logs?file=application.py
+
+
 ### 3.3. Models
 
 Models live in `ds-Data` at `datafunctions/model/models`. Each retriever *MUST* subclass the _TopicModel_ base class (`datafunctions/model/modelfunctions.py:TopicModel`) and implement the _model\_and\_save\_topics_ method. This method should also update any additional model files (for example, NearestNeighbors or similar) that will be provided to the `ds-API`.
 
 ### 3.4. Hosting
 
+
 The `ds-Data/dev` branch is hosted on Amazon Elastic Beanstalk, under app `quickhire`, environment `Quickhire-data-dev`.
+
 
 `ds-API/dev` is on Elastic Beanstalk, `quickhire`, `Quickhire-API-dev`.
 
@@ -56,6 +64,7 @@ Both are deployed with a CodePipeline. (NOTE: The `quickhire-api-dev` CodePipeli
 ### 3.5. Utility API
 
 The Utility API can be found in `ds-Data` at `app.py` and provides control and monitoring functionality for the scrapers.
+
 
 The following endpoints are available:
 - Health check: /health
