@@ -34,7 +34,7 @@
 
 Base URL: http://quickhire-api-dev.j535vysrhe.us-east-1.elasticbeanstalk.com/
 
-The API accepts url-encoded GET requests and returns `application/json` responses.
+The API accepts url-encoded GET requests and returns `app/json` responses.
 
 
 ## 3. Resources
@@ -272,7 +272,7 @@ The salary of the job, if available.
 
 The seniority level of the job.
 
-A link to the application page of the job.
+A link to the app page of the job.
 
 `lambda_hireability` *Float* or *null*
 
