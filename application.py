@@ -1,5 +1,5 @@
 # from flask import Flask, jsonify, request, make_response
-from fastapi import FastAPI 
+from fastapi import FastAPI
 from dbfunctions import get_details
 import psycopg2
 from dbfunctions import get_jobs
@@ -9,9 +9,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 application = app = FastAPI()
 
+@app.get('/')
+async def health():
+	return 'Server running!'
 
 @app.get('/search')
-async def search(job_id: int = None, city: str = None, state_province: str = None, country: str = None, 
+async def search(job_id: int = None, city: str = None, state_province: str = None, country: str = None,
 		   title: str = None, count: int = 50, before: int = None, after: int = None, seniority: str = None,
 		   salary_min: int = None, salary_max: int = None):
 	""" when someone types /search in the url this function will work to
@@ -109,4 +112,4 @@ allow_headers=["*"]
 if __name__ == "__main__":
 	uvicorn.run(application)
 
-	
+

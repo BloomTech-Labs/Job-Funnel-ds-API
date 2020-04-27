@@ -136,7 +136,21 @@ def get_details(job_id, db):
 
 def get_jobs(db, count=100, city=None, state_province=None, country='US', title=None, before=None, after=None, salary_min=None, salary_max=None, seniority=None):
 	state_province = handle_state_province(state_province)
-
+	job_name_filter_query = """
+	SELECT * FROM job_listings 
+	WHERE
+	 	title LIKE '%developer'
+	 	OR title LIKE '%designer'
+	 	OR title LIKE '%programmer'
+	 	OR title LIKE '%data'
+	 	OR title LIKE '%engineer'
+		OR title LIKE '%analyst'
+		OR title LIKE '%QA'
+		OR title LIKE '%UX'
+		OR title LIKE '%UI'
+	ORDER BY 
+		post_date_utc ASC
+	"""
 	cur = db.cursor()
 
 	location_where_subquery = '''
@@ -211,6 +225,7 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 	job_results_query = f'''
 		SELECT job_listings.id, job_listings.title, EXTRACT(epoch FROM job_listings.post_date_utc)
 		FROM job_listings
+		{job_name_filter_query}
 		{location_subquery}
 		{where_subquery}
 		ORDER BY random()
