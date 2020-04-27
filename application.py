@@ -66,7 +66,7 @@ async def details(job_id: int = None):
 		output = {
 			'error': 'job_id parameter is required'
 		}
-		return jsonify(output)
+		return output
 	with psycopg2.connect(
 			dbname=config("DB_DB"),
 			user=config("DB_USER"),
