@@ -167,22 +167,26 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 	'''
 	# filters only for key words that are probably in tech jobs
 	# can probably be removed after cron job to filter database is done
+	# ILIKE is Postgres specific and makes things case insensitive
 	job_details_subquery = '''
 		WHERE 
-		    title LIKE '%%developer'
-	 		OR title LIKE '%%designer'
-	 		OR title LIKE '%%programmer'
-	 		OR title LIKE '%%data'
-	 		OR title LIKE '%%engineer'
-			OR title LIKE '%%analyst'
-			OR title LIKE '%%QA'
-			OR title LIKE '%%UX'
-			OR title LIKE '%%UI'
-			OR title LIKE '%%dev'
-			OR title like '%%HCI'
-			OR title like '%%software'
-			OR title like '%%database'
-			OR title like '%%web'
+		    title ILIKE '%%developer'
+	 		OR title ILIKE '%%designer'
+	 		OR title ILIKE '%%programmer'
+	 		OR title ILIKE '%%data'
+	 		OR title ILIKE '%%engineer'
+			OR title ILIKE '%%analyst'
+			OR title ILIKE '%%QA'
+			OR title ILIKE '%%UX'
+			OR title ILIKE '%%UI'
+			OR title ILIKE '%%dev'
+			OR title ILIKE '%%HCI'
+			OR title ILIKE '%%software'
+			OR title ILIKE '%%database'
+			OR title ILIKE '%%web'
+			OR title ILIKE '%%iOS'
+			OR title ILIKE '%%Android'
+			OR title ILIKE '%%mobile'
 	'''
 	if before is not None:
 		job_details_subquery += '''
@@ -210,8 +214,6 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 				OR pay_exact > %(salary_max)s
 			)
 		'''
-	# filter for only tech jobs based on keywords	
-
 		
 	title_params = {}
 	if title is not None:
@@ -222,15 +224,13 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 			job_details_subquery += f'''
 				AND title ILIKE %({key})s
 			'''
-
+	# final combined query, filtered by most recent post date
 	job_results_query = f"""
 		SELECT job_listings.id, job_listings.title, EXTRACT(epoch FROM job_listings.post_date_utc)
 		FROM job_listings
-
 		{location_subquery}
 		{job_details_subquery}
-
-		ORDER BY job_listings.post_date_utc
+		ORDER BY job_listings.post_date_utc DESC
 		LIMIT %(count)s;
 	"""
 
