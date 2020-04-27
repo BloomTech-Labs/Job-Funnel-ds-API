@@ -136,39 +136,22 @@ def get_details(job_id, db):
 
 def get_jobs(db, count=100, city=None, state_province=None, country='US', title=None, before=None, after=None, salary_min=None, salary_max=None, seniority=None):
 	state_province = handle_state_province(state_province)
-	job_name_filter_query = """
-	SELECT * FROM job_listings 
-	WHERE
-	 	title LIKE '%developer'
-	 	OR title LIKE '%designer'
-	 	OR title LIKE '%programmer'
-	 	OR title LIKE '%data'
-	 	OR title LIKE '%engineer'
-		OR title LIKE '%analyst'
-		OR title LIKE '%QA'
-		OR title LIKE '%UX'
-		OR title LIKE '%UI'
-	ORDER BY 
-		post_date_utc ASC
-	"""
 	cur = db.cursor()
-
-	location_where_subquery = '''
+	exact_location_subquery = '''
 		WHERE TRUE
 	'''
 	if city is not None:
-		location_where_subquery += '''
+		exact_location_subquery += '''
 			AND city = %(city)s
 		'''
 	if state_province is not None:
-		location_where_subquery += '''
+		exact_location_subquery += '''
 			AND state_province = %(state_province)s
 		'''
 	if country is not None:
-		location_where_subquery += '''
+		exact_location_subquery += '''
 			AND country ILIKE %(country)s
 		'''
-
 	location_subquery = f'''
 		INNER JOIN (
 			SELECT *
@@ -176,61 +159,80 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 			INNER JOIN (
 				SELECT *
 				FROM locations
-				{location_where_subquery}
+				{exact_location_subquery}
 			) AS loc
 			ON job_locations.location_id = loc.id
 		) AS jobs_locs
 		ON job_listings.id = jobs_locs.job_id
 	'''
-
-	where_subquery = '''
-		WHERE TRUE
+	# filters only for key words that are probably in tech jobs
+	# can probably be removed after cron job to filter database is done
+	job_details_subquery = '''
+		WHERE 
+		    title LIKE '%%developer'
+	 		OR title LIKE '%%designer'
+	 		OR title LIKE '%%programmer'
+	 		OR title LIKE '%%data'
+	 		OR title LIKE '%%engineer'
+			OR title LIKE '%%analyst'
+			OR title LIKE '%%QA'
+			OR title LIKE '%%UX'
+			OR title LIKE '%%UI'
+			OR title LIKE '%%dev'
+			OR title like '%%HCI'
+			OR title like '%%software'
+			OR title like '%%database'
+			OR title like '%%web'
 	'''
 	if before is not None:
-		where_subquery += '''
+		job_details_subquery += '''
 			AND post_date_utc < TO_TIMESTAMP(%(before)s)
 		'''
 	if after is not None:
-		where_subquery += '''
+		job_details_subquery += '''
 			AND post_date_utc > TO_TIMESTAMP(%(after)s)
 		'''
 	if seniority is not None:
-		where_subquery += '''
+		job_details_subquery += '''
 			AND seniority ILIKE %(seniority)s
 		'''
 	if salary_min is not None:
-		where_subquery += '''
+		job_details_subquery += '''
 			AND (
 				pay_min > %(salary_min)s
 				OR pay_exact > %(salary_min)s
 			)
 		'''
 	if salary_max is not None:
-		where_subquery += '''
+		job_details_subquery += '''
 			AND (
 				pay_max > %(salary_max)s
 				OR pay_exact > %(salary_max)s
 			)
 		'''
+	# filter for only tech jobs based on keywords	
+
+		
 	title_params = {}
 	if title is not None:
 		title_parts = title.split()
 		for i, title_part in enumerate(title_parts):
 			key = f'title_part_{i}'
 			title_params[key] = f'%{title_part}%'
-			where_subquery += f'''
+			job_details_subquery += f'''
 				AND title ILIKE %({key})s
 			'''
 
-	job_results_query = f'''
+	job_results_query = f"""
 		SELECT job_listings.id, job_listings.title, EXTRACT(epoch FROM job_listings.post_date_utc)
 		FROM job_listings
-		{job_name_filter_query}
+
 		{location_subquery}
-		{where_subquery}
-		ORDER BY random()
+		{job_details_subquery}
+
+		ORDER BY job_listings.post_date_utc
 		LIMIT %(count)s;
-	'''
+	"""
 
 	if city is not None:
 		city = titlecase(city)
