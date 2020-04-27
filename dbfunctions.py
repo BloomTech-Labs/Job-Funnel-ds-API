@@ -230,7 +230,7 @@ def get_jobs(db, count=100, city=None, state_province=None, country='US', title=
 		FROM job_listings
 		{location_subquery}
 		{job_details_subquery}
-		ORDER BY job_listings.post_date_utc
+		ORDER BY job_listings.post_date_utc DESC
 		LIMIT %(count)s;
 	"""
 
