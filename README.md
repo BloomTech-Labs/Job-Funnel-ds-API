@@ -69,9 +69,7 @@ See [Frontend Documentation](https://github.com/Lambda-School-Labs/Job-Funnel-fe
 
 ## 2. Current
 
-See [architecture.md](./architecture.md) for details on the current project state.
-
-There is not currently any code coverage.
+This application is the API that web interfaces with. 
 
 ## 3. Future
 
@@ -97,12 +95,7 @@ In the aforementioned hacky methodology, the models are shared between `ds-Data`
 	- One of the primary value points of the project, the hireability score is a value that assesses how relevant a job is to Lambda graduates, based on a classification model trained on historical grads (and what jobs they found).
 	- If you can't get data from Lambda, might want to scrape LinkedIn for people associated with Lambda School, and what jobs they have.
 - Add tests
-	- There's not currently any test coverage.
-
-### 3.3. Minor Fixes
-
-- The `quickhire-api-dev` CodePipeline does not automatically pull changes from GitHub. You have to manually release changes.
-
+	- There's not currently any code coverage. This is barely covered in DS currriculum so if you do something please leave docs to help future teams get up to speed. 
 
 ## Getting Started
 
@@ -153,6 +146,45 @@ Remember that this project is licensed under the MIT license, and by submitting 
 - Ensure that your code conforms to our existing code conventions and test coverage.
 - Include the relevant issue number, if applicable.
 - You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
+
+# Current and Future Project Status
+
+## Current
+
+See [architecture.md](./architecture.md) for details on the current project state.
+
+There is not currently any code coverage.
+
+## Future
+
+### Top Priorities
+
+#### Implement lda17
+
+No models are currently available on the /search endpoint. This is somewhat unacceptable - using the models to improve search is a crucial part of the project. There is a hacky start to an implementation on the `ds-Data/serve-models` and `ds-API/skills` branches, which serves the models over the `ds-Data` utility API, and provides a _/check\_fresh_ to reload the models if they're more than an hour out of date. These should now be in the notebooks folder of master instead of in this obscure branch no one knew about. 
+
+Note that model results should be provided via the `relevance` parameter on jobs returned from the API's `/search` endpoint.
+
+#### Investigate best methods of sharing models
+
+In the aforementioned hacky methodology, the models are shared between `ds-Data` and `ds-API` over HTTP. This is _not_ a good way of doing this. Amazon EFS is likely the simplest solution, but further investigation may be warranted.
+
+#### Add more scrapers
+
+### Important Changes
+
+- Improve API efficiency
+	- Currently, the API gets a list of results, then iterates through each to get the details. This is an artifact of prior API design (where full details were not returned by /search), and is inefficient. Rebuild the queries to fix this.
+- Implement Hireability score
+	- One of the primary value points of the project, the hireability score is a value that assesses how relevant a job is to Lambda graduates, based on a classification model trained on historical grads (and what jobs they found).
+	- If you can't get data from Lambda, might want to scrape LinkedIn for people associated with Lambda School, and what jobs they have.
+- Add tests
+	- There's not currently any test coverage.
+
+### Minor Fixes
+
+- The `quickhire-api-dev` CodePipeline does not automatically pull changes from GitHub. You have to manually release changes.
+
 
 ### Attribution
 
