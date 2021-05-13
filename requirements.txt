@@ -8,7 +8,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 psycopg2-binary==2.8.5
-pydantic==1.5.1
+pydantic==1.6.2
 python-decouple==3.3
 starlette==0.13.2
 uvicorn==0.11.3
